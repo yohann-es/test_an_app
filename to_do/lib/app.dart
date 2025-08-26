@@ -1,15 +1,46 @@
 //Next up is Todo App (CRUD + local DB). This will teach you lists, forms, SQLite, state management.
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-void main(){
+import 'home.dart';
+
+void main() {
   runApp(const ToDoApp());
 }
 
-class ToDoApp extends StatelessWidget{
+class ToDoApp extends StatelessWidget {
   const ToDoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'TO DO',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 214, 5, 96),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 157, 38, 81),
+          foregroundColor: Colors.white,
+          centerTitle: true,
+        ),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 16),
+          titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 157, 38, 81),
+            foregroundColor: Colors.white,
+          ),
+        ),
+        checkboxTheme: CheckboxThemeData(
+          fillColor: WidgetStatePropertyAll(Color.fromARGB(255, 157, 38, 81)),
+        ),
+      ),
+      home: const ToDoHomePage(),
+    );
   }
 }
