@@ -19,10 +19,10 @@ class ToDoApp extends StatelessWidget {
       title: 'TO DO',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 214, 5, 96),
+          seedColor: const Color.fromARGB(113, 30, 17, 23),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 157, 38, 81),
+          backgroundColor: Color.fromARGB(113, 30, 17, 23),
           foregroundColor: Colors.white,
           centerTitle: true,
         ),
@@ -32,12 +32,12 @@ class ToDoApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 157, 38, 81),
+            backgroundColor:  Color.fromARGB(113, 30, 17, 23),
             foregroundColor: Colors.white,
           ),
         ),
         checkboxTheme: CheckboxThemeData(
-          fillColor: WidgetStatePropertyAll(Color.fromARGB(255, 157, 38, 81)),
+          fillColor: WidgetStatePropertyAll( Color.fromARGB(113, 30, 17, 23)),
         ),
       ),
       home: const ToDoHomePage(),

@@ -8,10 +8,36 @@ class ToDoHomePage extends StatefulWidget {
 }
 
 class _ToDoHomePageState extends State<ToDoHomePage> {
+  final List<String> tasks = [];
+  List<Map<dynamic, dynamic>> allItems = [];
+  bool? _isChecked = false;
+
+  void _addTask() {
+    setState(() {
+      allItems.add({"title": TextField(), "checked": false});
+      // tasks.add("Task ${tasks.length + 1}"); // add a new task
+    });
+  }
+
+  void _removeTask() {
+    if (allItems.isEmpty) return;
+    setState(() {
+      allItems.removeWhere((item) => item["checked"] == true);
+      _isChecked = false;
+      // allItems.removeAt(allItems.length - 1);
+    });
+  }
+
+  void _atChecked(int index, bool? newValue) {
+    setState(() {
+      allItems[index]["checked"] = newValue ?? false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('TO DO')),
+      appBar: AppBar(title: const Text('TO DO APP')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -21,51 +47,50 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 100),
-                ElevatedButton(
-                  onPressed: () {
-                    print('Add task pressed');
-                  },
-                  child: Text('Add Task'),
+                ElevatedButton(onPressed: _addTask, child: Text('Add Task')),
+                SizedBox(width: 200),
+                Card(
+                  child: Checkbox(
+                    value: _isChecked,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _isChecked = newValue;
+                        for (var item in allItems) {
+                          item["checked"] = newValue;
+                        }
+                      });
+                    },
+                    activeColor: Colors.orange,
+                  ),
                 ),
-                SizedBox(width: 150),
-                ElevatedButton(
-                  onPressed: () {
-                    print('Edit task pressed');
-                  },
-                  child: Text('Edit task'),
-                ),
-              ],
+              ],//<> children 
             ),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.all(20),
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      'Sooraj S Nair',
-                      style: TextStyle(fontSize: 50),
+              child: ListView.builder(
+                padding: const EdgeInsets.all(20),
+                itemCount: allItems.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      subtitle: Checkbox(
+                        value: allItems[index]["checked"],
+                        onChanged: (newValue) {
+                          _atChecked(index, newValue);
+                        },
+                        activeColor: Colors.orangeAccent,
+                      ),
+
+                      title: allItems[index]["title"],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    print('Delete pressed');
-                  },
-                  child: Text('Delete Entry'),
-                ),
-                SizedBox(width: 100),
-                ElevatedButton(
-                  onPressed: () {
-                    print('Delete Checked pressed');
-                  },
-                  child: Text('Delete Checked'),
-                ),
+                ElevatedButton(onPressed: _removeTask, child: Text('Delete')),
               ],
             ),
           ],
@@ -73,15 +98,11 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
       ),
       bottomNavigationBar: Container(
         height: 60.0, // Set desired height
-        color: Color.fromARGB(255, 157, 38, 81), // Set desired background color
+        color: Color.fromARGB(113, 30, 17, 23), // Set desired background color
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Icon(Icons.home, color: Colors.white),
-            Icon(Icons.search, color: Colors.white),
-            Icon(Icons.settings, color: Colors.white),
-          ],
+          children: [],
         ),
       ),
     );
