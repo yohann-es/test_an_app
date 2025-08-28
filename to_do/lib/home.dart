@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class ToDoHomePage extends StatefulWidget {
   const ToDoHomePage({super.key});
@@ -8,15 +9,37 @@ class ToDoHomePage extends StatefulWidget {
 }
 
 class _ToDoHomePageState extends State<ToDoHomePage> {
-  final List<String> tasks = [];
+  List<String> tasks = [];
   List<Map<dynamic, dynamic>> allItems = [];
   bool? _isChecked = false;
+  final TextEditingController _controller = TextEditingController();
+  late Box<List> taskBox;
+
+  @override
+  void initState(){
+    super.initState();
+    taskBox = Hive.box<List>('tasks');
+    tasks = List<String>.from(taskBox.get('taskList') ?? []);
+  }
 
   void _addTask() {
+        // if (_controller.text.isEmpty) return;
+
     setState(() {
-      allItems.add({"title": TextField(), "checked": false});
+      
+      allItems.add({"title": TextField(
+        controller: _controller,
+        decoration: const InputDecoration(
+          hintText: "enter a task",
+        ),
+      ),
+       "checked": false});
       // tasks.add("Task ${tasks.length + 1}"); // add a new task
     });
+      tasks.add(_controller.text);
+      _controller.clear();
+      taskBox.put('taskList', tasks); // Save updated list
+
   }
 
   void _removeTask() {

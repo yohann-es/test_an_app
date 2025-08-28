@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 // import 'package:provider/provider.dart';
 import 'home.dart';
+import 'main.dart';
 
 void main()  async{
     
@@ -46,6 +47,7 @@ class ToDoApp extends StatelessWidget {
         ),
       ),
       home: const ToDoHomePage(),
+      // home: const TodoPage()
     );
   }
 }
