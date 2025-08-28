@@ -1,11 +1,13 @@
 //Next up is Todo App (CRUD + local DB). This will teach you lists, forms, SQLite, state management.
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'home.dart';
 
-void main() {
+void main()  async{
+    
+
   runApp(const ToDoApp());
 }
 

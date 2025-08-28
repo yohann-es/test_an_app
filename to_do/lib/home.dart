@@ -88,7 +88,6 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-
               children: [
                 ElevatedButton(onPressed: _removeTask, child: Text('Delete')),
               ],
