@@ -2,12 +2,15 @@
 // import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 // import 'package:provider/provider.dart';
 import 'home.dart';
 
 void main()  async{
     
-
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox<List>('tasks');
   runApp(const ToDoApp());
 }
 
