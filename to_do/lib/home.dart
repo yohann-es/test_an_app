@@ -14,7 +14,11 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
 
   void _addTask() {
     setState(() {
-      allItems.add({"title": TextField(), "checked": false});
+      final TextEditingController controller = TextEditingController();
+
+      dynamic textValue = TextField(controller: controller);
+      allItems.add({"title": textValue, "checked": false});
+      print(controller.text);
       // tasks.add("Task ${tasks.length + 1}"); // add a new task
     });
   }
@@ -63,7 +67,7 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
                     activeColor: Colors.orange,
                   ),
                 ),
-              ],//<> children 
+              ], //<> children
             ),
             Expanded(
               child: ListView.builder(
