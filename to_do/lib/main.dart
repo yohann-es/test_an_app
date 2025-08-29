@@ -219,3 +219,90 @@
 //     );
 //   }
 // }
+
+
+
+
+
+
+
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+
+class TodoPage extends StatefulWidget {
+  const TodoPage({super.key});
+
+  @override
+  State<TodoPage> createState() => _TodoPageState();
+}
+
+class _TodoPageState extends State<TodoPage> {
+  final TextEditingController _controller = TextEditingController();
+  late Box<List> taskBox;
+  List<String> tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    taskBox = Hive.box<List>('tasks');
+    tasks = List<String>.from(taskBox.get('taskList') ?? []);
+  }
+
+  void _addTask() {
+    if (_controller.text.isEmpty) return;
+    setState(() {
+      tasks.add(_controller.text);
+      _controller.clear();
+      taskBox.put('taskList', tasks); // Save updated list
+    });
+  }
+
+  void _deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+      taskBox.put('taskList', tasks); // Save updated list
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Hive To-Do")),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      hintText: "Enter a task",
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: _addTask,
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) => ListTile(
+                title: Text(tasks[index]),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () => _deleteTask(index),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
