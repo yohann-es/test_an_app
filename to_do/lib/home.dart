@@ -8,10 +8,10 @@ class ToDoHomePage extends StatefulWidget {
   State<ToDoHomePage> createState() => _ToDoHomePageState();
 }
 
-class _ToDoHomePageState extends State<ToDoHomePage> {
+class _ToDoHomePageState extends State<ToDoHomePage> with WidgetsBindingObserver {
   late Box<List> taskBox;
   List<String> tasks = [];
-  List<Map<dynamic, dynamic>> allItems = [];
+  List<Map<String, dynamic>> allItems = [];
   bool? _isChecked = false;
 
   // void _addTask() {
@@ -29,11 +29,45 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
   @override
   void initState(){
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+
     taskBox = Hive.box<List>('tasks');
     tasks = List<String>.from(taskBox.get('taskList') ?? []);
+
+    final stored = taskBox.get('taskList') ?? [];
+    allItems = stored.map((item) => {
+      "controller": TextEditingController(text: item),
+      "checked": false,
+    }).toList();
   }
 
+  @override
+  void dispose(){
+    _saveTasks();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state){
+    if(state == AppLifecycleState.paused || state == AppLifecycleState.inactive){
+      _saveTasks();
+    }
+  }
+
+  void _saveTasks() {
+    final taskData = allItems.map((item) => {
+      "title": item["controller"].text,
+      "checked": item["checked"],
+    }).toList();
+
+    taskBox.put("taskList", taskData);
+  }
+  
+ 
   void _addTask() {
+    
   setState(() {
     final controller = TextEditingController();
 
@@ -42,7 +76,7 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
       "checked": false
     });
       for(int i =0 ; i<allItems.length ; i ++){
-        print("all items: ${allItems[i]["controller"].text}");
+        print("item ${i+1}: ${allItems[i]["controller"].text}");
       }
     
   });
