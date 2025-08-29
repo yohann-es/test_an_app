@@ -276,6 +276,7 @@ class _TodoPageState extends State<TodoPage> {
     if (_controller.text.isEmpty) return;
     setState(() {
       tasks.add(_controller.text);
+       print(_controller.text);
       _controller.clear();
       taskBox.put('taskList', tasks); // Save updated list
     });

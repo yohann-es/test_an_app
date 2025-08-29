@@ -46,8 +46,8 @@ class ToDoApp extends StatelessWidget {
           fillColor: WidgetStatePropertyAll( Color.fromARGB(113, 30, 17, 23)),
         ),
       ),
-      home: const ToDoHomePage(),
-      // home: const TodoPage()
+      // home: const ToDoHomePage(),
+      home: const TodoPage()
     );
   }
 }

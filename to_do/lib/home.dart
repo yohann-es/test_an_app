@@ -35,8 +35,10 @@ class _ToDoHomePageState extends State<ToDoHomePage> {
         ),
       ),
        "checked": false});
+      
       // tasks.add("Task ${tasks.length + 1}"); // add a new task
-    });
+    }
+    );
       tasks.add(_controller.text);
       _controller.clear();
       taskBox.put('taskList', tasks); // Save updated list
