@@ -33,12 +33,12 @@ class _ToDoHomePageState extends State<ToDoHomePage> with WidgetsBindingObserver
 
 
     taskBox = Hive.box<List>('tasks');
-    tasks = List<String>.from(taskBox.get('taskList') ?? []);
+    // tasks = List<String>.from(taskBox.get('taskList') ?? []);
 
     final stored = taskBox.get('taskList') ?? [];
-    allItems = stored.map((item) => {
-      "controller": TextEditingController(text: item),
-      "checked": false,
+    allItems = stored.map<Map<String, dynamic>>((item) => {
+      "controller": TextEditingController(text: item["title"]),
+      "checked": item["checked"],
     }).toList();
   }
 
